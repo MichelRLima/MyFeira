@@ -1,0 +1,14 @@
+.titulo {
+    color: rgb(40, 82, 158);
+    text-align: center;
+    margin-top: 2em;
+    font-family: 'Mooli Regular', sans-serif;
+    font-weight: 400;
+}
+
+.descricao {
+    text-align: center;
+    font-family: 'Mooli Regular', sans-serif;
+    font-weight: 400;
+    color: rgb(80, 109, 163);
+}
