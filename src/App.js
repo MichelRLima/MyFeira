@@ -23,11 +23,14 @@ function App() {
         id: generateUniqueId(),
         nome: novoItem.nome,
         valor: novoItem.valor,
+        qtd: 1,
 
       };
+      console.log(newItem.qtd)
       setItens([...itens, newItem]);
       setNovoItem({ nome: '', valor: "" });
       setCriarItem(!CriarItem);
+
     }
   };
 
@@ -44,10 +47,21 @@ function App() {
   const calcularTotal = () => {
     let total = 0;
     itens.forEach((item) => {
-      total += item.valor;
+      total += item.valor * item.qtd;
     });
     return total.toFixed(2);
   };
+
+  const atualizarItem = (id, novoNome, novoValor) => {
+    const novosItens = itens.map((item) => {
+      if (item.id === id) {
+        return { ...item, nome: novoNome, valor: novoValor };
+      }
+      return item;
+    });
+    setItens(novosItens);
+  };
+
 
   return (
     <div className="App">
@@ -56,13 +70,21 @@ function App() {
       <div className='Item'>
         {itens.map((item) => (
           <div key={item.id}>
-            <Item nome={item.nome} valor={item.valor} />
+            <Item
+              id={item.id}
+              nome={item.nome}
+              valor={item.valor}
+              qtd={item.qtd}
+              atualizarItem={atualizarItem}
+
+            />
             <div className='container_delete'>
               <BsFillTrash3Fill className='delete' onClick={() => removerItem(item.id)} />
             </div>
             <hr></hr>
           </div>
         ))}
+
       </div>
 
       {CriarItem ? (

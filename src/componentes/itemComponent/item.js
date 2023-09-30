@@ -21,14 +21,22 @@ function Item(props) {
 
 
 
+
+
+
     useEffect(() => {
         setValorSomado(valorEditado * quantidade)
+
+
     }, [quantidade, valorEditado])
+
+
 
     const handleSalvarClick = () => {
         // Você pode adicionar aqui a lógica para salvar os valores editados
         // Por exemplo, você pode atualizar o estado global ou fazer uma chamada à API
         // E então, definir editando de volta para false para sair do modo de edição
+        props.atualizarItem(props.id, nomeEditado, valorEditado, valorSomado);
         setEditando(false);
     };
 
@@ -39,7 +47,7 @@ function Item(props) {
                     <div className={styles.containerContador}>
                         <button
                             className={styles.buttonMenos}
-                            disabled={quantidade <= 0 ? true : false}
+                            disabled={quantidade <= 1 ? true : false}
                             onClick={() => setQuantidade(quantidade - 1)}>
                             -
                         </button>
@@ -53,7 +61,7 @@ function Item(props) {
                     {editando ? (
                         <>  <div className={styles.conteudo}>
                             <span>Nome: </span><Input className={styles.inputNome} type="text" value={nomeEditado} onChange={(e) => setNomeEditado(e.target.value)} />
-                            <span>R$: </span><Input className={styles.inputValor} type="text" value={valorEditado} onChange={(e) => setValorEditado(e.target.value)} />
+                            <span>R$: </span><Input className={styles.inputValor} type="text" value={valorEditado} onChange={(e) => setValorEditado(parseFloat(e.target.value))} />
 
                         </div>
                             <div className={styles.containerEditar}>
