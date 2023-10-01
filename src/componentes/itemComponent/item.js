@@ -18,27 +18,32 @@ function Item(props) {
     const handleEditarClick = () => {
         setEditando(!editando);
     };
-
-
-
+    /////////////////////////////////////////////////
 
 
 
     useEffect(() => {
-        setValorSomado(valorEditado * quantidade)
-
+        setValorSomado(parseFloat(valorEditado) * quantidade)
 
     }, [quantidade, valorEditado])
 
 
 
+    useEffect(() => {
+        props.atualizarItem(props.id, nomeEditado, valorEditado, valorSomado);
+    }, [valorSomado])
+
+
+    ////////////////////////////////////////////
     const handleSalvarClick = () => {
         // Você pode adicionar aqui a lógica para salvar os valores editados
         // Por exemplo, você pode atualizar o estado global ou fazer uma chamada à API
         // E então, definir editando de volta para false para sair do modo de edição
-        props.atualizarItem(props.id, nomeEditado, valorEditado, valorSomado);
+        console.log(valorSomado)
         setEditando(false);
     };
+
+
 
     return (
         <>
@@ -61,11 +66,11 @@ function Item(props) {
                     {editando ? (
                         <>  <div className={styles.conteudo}>
                             <span>Nome: </span><Input className={styles.inputNome} type="text" value={nomeEditado} onChange={(e) => setNomeEditado(e.target.value)} />
-                            <span>R$: </span><Input className={styles.inputValor} type="text" value={valorEditado} onChange={(e) => setValorEditado(parseFloat(e.target.value))} />
+                            <span>R$: </span><Input className={styles.inputValor} type="text" value={valorEditado} onChange={(e) => setValorEditado(e.target.value)} />
 
                         </div>
                             <div className={styles.containerEditar}>
-                                <MdSave onClick={handleSalvarClick}>SALVAR </MdSave>
+                                <MdSave onClick={handleSalvarClick}  >SALVAR </MdSave>
                             </div>
                         </>
                     ) : (
@@ -77,7 +82,7 @@ function Item(props) {
 
 
 
-                                <BsFillPencilFill onClick={handleEditarClick}></BsFillPencilFill>
+                                <BsFillPencilFill onClick={handleEditarClick}  ></BsFillPencilFill>
                             </div>
 
                         </>

@@ -1,3 +1,4 @@
+
 import './App.css';
 import React, { useState } from 'react';
 import Client from './componentes/clientComponet/client';
@@ -23,10 +24,10 @@ function App() {
         id: generateUniqueId(),
         nome: novoItem.nome,
         valor: novoItem.valor,
-        qtd: 1,
+        valorTotal: novoItem.valor,
 
       };
-      console.log(newItem.qtd)
+
       setItens([...itens, newItem]);
       setNovoItem({ nome: '', valor: "" });
       setCriarItem(!CriarItem);
@@ -47,15 +48,15 @@ function App() {
   const calcularTotal = () => {
     let total = 0;
     itens.forEach((item) => {
-      total += item.valor * item.qtd;
+      total += item.valorTotal;
     });
     return total.toFixed(2);
   };
 
-  const atualizarItem = (id, novoNome, novoValor) => {
+  const atualizarItem = (id, novoNome, novoValor, novoQtd) => {
     const novosItens = itens.map((item) => {
       if (item.id === id) {
-        return { ...item, nome: novoNome, valor: novoValor };
+        return { ...item, nome: novoNome, valor: novoValor, valorTotal: novoQtd };
       }
       return item;
     });
@@ -76,6 +77,7 @@ function App() {
               valor={item.valor}
               qtd={item.qtd}
               atualizarItem={atualizarItem}
+
 
             />
             <div className='container_delete'>
