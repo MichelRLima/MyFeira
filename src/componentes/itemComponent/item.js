@@ -24,14 +24,21 @@ function Item(props) {
 
     useEffect(() => {
         setValorSomado(parseFloat(valorEditado) * quantidade)
+        console.log("setado")
 
     }, [quantidade, valorEditado])
 
 
+    const atualizarItem = () => {
+        props.atualizarItem(props.id, nomeEditado, valorEditado, valorSomado);
+    };
 
     useEffect(() => {
-        props.atualizarItem(props.id, nomeEditado, valorEditado, valorSomado);
-    }, [valorSomado])
+        atualizarItem();
+        // Evite que o useEffect seja executado novamente ao incluir props.atualizarItem diretamente
+        // como dependência. Isso é seguro, pois props.atualizarItem não muda ao longo do ciclo de vida do componente.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.id, nomeEditado, valorEditado, valorSomado]);
 
 
     ////////////////////////////////////////////
