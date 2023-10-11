@@ -24,7 +24,6 @@ function Item(props) {
 
     useEffect(() => {
         setValorSomado(parseFloat(valorEditado) * quantidade)
-        console.log("setado")
 
     }, [quantidade, valorEditado])
 

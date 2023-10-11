@@ -28,16 +28,17 @@
 
 .nome {
     font-size: 0.9em;
+    margin-left: 1.5em;
 
 }
 
 
 .valor {
-    width: 3.3em;
+    width: 4.5em;
     margin-left: auto;
     font-weight: bold;
-    margin-right: 0.5em;
     font-size: 0.7em;
+
 
 }
 

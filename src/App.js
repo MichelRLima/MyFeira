@@ -6,9 +6,33 @@ import Item from "./componentes/itemComponent/item"
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai'
 import { BsFillTrash3Fill } from 'react-icons/bs'
-import { Input } from 'antd';
-
+import Swal from 'sweetalert2';
+import ItemInput from './componentes/ItemInput/ItemInput';
 function App() {
+
+  const showAlert = (item, nome) => {
+    Swal.fire({
+      title: 'Voce deseja retirar esse item?',
+      text: nome,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, retirar da cesta!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Excluído!',
+          text: 'Item retirado da cesta',
+          icon: 'success',
+          confirmButtonColor: '#4caf50', // Defina a cor desejada para o botão OK
+          confirmButtonText: 'OK' // Altere o texto do botão OK conforme necessário
+        })
+        removerItem(item)
+      }
+    })
+  };
   const [itens, setItens] = useState([]);
   const [novoItem, setNovoItem] = useState({ nome: '', valor: "" });
   const [CriarItem, setCriarItem] = useState(false);
@@ -68,6 +92,9 @@ function App() {
     <div className="App">
       <Client nome="Michel" />
 
+
+
+
       <div className='Item'>
         {itens.map((item) => (
           <div key={item.id}>
@@ -81,7 +108,7 @@ function App() {
 
             />
             <div className='container_delete'>
-              <BsFillTrash3Fill className='delete' onClick={() => removerItem(item.id)} />
+              <BsFillTrash3Fill className='delete' onClick={() => showAlert(item.id, item.nome)} />
             </div>
             <hr></hr>
           </div>
@@ -91,22 +118,7 @@ function App() {
 
       {CriarItem ? (
         <>
-          <div className='container_input'>
-            <Input
-              type="text"
-              placeholder="Item"
-              value={novoItem.nome}
-              onChange={(e) => setNovoItem({ ...novoItem, nome: e.target.value })}
-            />
-            <Input
-              type="number"
-              placeholder="Valor em R$"
-              value={novoItem.valor}
-              onChange={(e) =>
-                setNovoItem({ ...novoItem, valor: parseFloat(e.target.value) })
-              }
-            />
-          </div>
+          <ItemInput novoItem={novoItem} setNovoItem={setNovoItem} />
           <div className='container_buttons'>
             <AiFillCheckCircle className='container_buttons-confirm' onClick={adicionarItem} />
             <AiFillCloseCircle className='container_buttons-refuse' onClick={CriarNovoItem} />
