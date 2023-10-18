@@ -30,7 +30,7 @@ function Login(props) {
             </div>
 
             <div className={styles.containerTextoLogin}>
-                <p>Não tem cadastro? <a onClick={() => props.cadastrar()}>Clique aqui</a></p>
+                <p>Não tem cadastro? <span onClick={() => props.cadastrar()}>Clique aqui</span></p>
             </div>
 
         </>
