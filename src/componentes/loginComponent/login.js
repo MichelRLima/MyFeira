@@ -22,7 +22,7 @@ function Login(props) {
 
                 <Input
                     type="password"
-                    placeholder="username"
+                    placeholder="Senha"
 
                 />
 
