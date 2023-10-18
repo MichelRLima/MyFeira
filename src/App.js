@@ -1,4 +1,3 @@
-
 import './App.css';
 import React, { useState } from 'react';
 import Client from './componentes/clientComponet/client';
@@ -8,7 +7,81 @@ import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 import Swal from 'sweetalert2';
 import ItemInput from './componentes/ItemInput/ItemInput';
+import Login from './componentes/loginComponent/login'
+import axios from 'axios';
+import Cadastro from './componentes/cadastroComponent/cadastro';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
+
+  const newClientData = {
+    nome: "Michelteste",
+    username: "mrmdl",
+    password: "root",
+    itens: [
+      {
+        nome: "Item 1",
+        valor: 10.5,
+        quantidade: 3
+      },
+      {
+        nome: "Item 2",
+        valor: 5.0,
+        quantidade: 2
+      }
+    ]
+  };
+
+
+
+
+
+  axios.post('http://localhost:3001/clients', newClientData)
+    .then(response => {
+      console.log('Novo cliente inserido com sucesso:', response.data);
+    })
+    .catch(error => {
+      console.error('Erro ao inserir novo cliente:', error);
+    });
+
+
+
+
+  axios.get('http://localhost:3001/clients')
+    .then(response => {
+      console.log('Resposta da API:', response.data);
+      response.data.forEach(item => {
+        const client = item.client;
+        console.log('Cliente:', client);
+      });
+
+
+    })
+    .catch(error => {
+      console.error('Erro ao buscar dados da API:', error);
+    });
+
+
+
+  const [itens, setItens] = useState([]);
+  const [novoItem, setNovoItem] = useState({ nome: '', valor: "" });
+  const [CriarItem, setCriarItem] = useState(false);
+  const [login, setLogin] = useState(true)
+  const [cadastro, setCdastro] = useState(false)
+
+  function logar() {
+    toast.success('Usuário logado');
+    setLogin(false)
+    setCdastro(false)
+  }
+
+  function cadastrar() {
+
+    setLogin(false)
+    setCdastro(true)
+  }
 
   const showAlert = (item, nome) => {
     Swal.fire({
@@ -33,10 +106,6 @@ function App() {
       }
     })
   };
-  const [itens, setItens] = useState([]);
-  const [novoItem, setNovoItem] = useState({ nome: '', valor: "" });
-  const [CriarItem, setCriarItem] = useState(false);
-
   const generateUniqueId = () => {
     return Math.random().toString(36).substr(2, 9);
   };
@@ -88,55 +157,70 @@ function App() {
   };
 
 
+
   return (
+
+
     <div className="App">
-      <Client nome="Michel" />
+      <ToastContainer />
 
+      {login ?
+        (
+          <Login logar={logar} cadastrar={cadastrar}></Login>
+        )
+        : cadastro ?
+          (
+            <Cadastro logar={logar} ></Cadastro>
+          )
+          :
+          (
+            <>
+              <Client nome="Michel" />
+              <div className='Item'>
+                {itens.map((item) => (
+                  <div key={item.id}>
+                    <Item
+                      id={item.id}
+                      nome={item.nome}
+                      valor={item.valor}
+                      qtd={item.qtd}
+                      atualizarItem={atualizarItem}
+                    />
 
+                    <div className='container_delete'>
+                      <BsFillTrash3Fill className='delete' onClick={() => showAlert(item.id, item.nome)} />
+                    </div>
+                    <hr></hr>
+                  </div>
+                ))}
 
+              </div>
 
-      <div className='Item'>
-        {itens.map((item) => (
-          <div key={item.id}>
-            <Item
-              id={item.id}
-              nome={item.nome}
-              valor={item.valor}
-              qtd={item.qtd}
-              atualizarItem={atualizarItem}
+              {CriarItem ? (
+                <>
+                  <ItemInput novoItem={novoItem} setNovoItem={setNovoItem} />
+                  <div className='container_buttons'>
+                    <AiFillCheckCircle className='container_buttons-confirm' onClick={adicionarItem} />
+                    <AiFillCloseCircle className='container_buttons-refuse' onClick={CriarNovoItem} />
+                  </div>
+                </>
+              ) : (
+                <div className='Container_CriarItem'>
+                  <IoMdAddCircleOutline className="CriarItem" onClick={CriarNovoItem} />
+                  <span className='texto_criarItem'>Clique para criar um novo item</span>
+                </div>
+              )}
 
+              <div className='container_valorTotal'>
 
-            />
-            <div className='container_delete'>
-              <BsFillTrash3Fill className='delete' onClick={() => showAlert(item.id, item.nome)} />
-            </div>
-            <hr></hr>
-          </div>
-        ))}
+                <span>Valor total R$: </span>
+                <p> {calcularTotal()}</p>
 
-      </div>
+              </div>
+            </>
+          )
 
-      {CriarItem ? (
-        <>
-          <ItemInput novoItem={novoItem} setNovoItem={setNovoItem} />
-          <div className='container_buttons'>
-            <AiFillCheckCircle className='container_buttons-confirm' onClick={adicionarItem} />
-            <AiFillCloseCircle className='container_buttons-refuse' onClick={CriarNovoItem} />
-          </div>
-        </>
-      ) : (
-        <div className='Container_CriarItem'>
-          <IoMdAddCircleOutline className="CriarItem" onClick={CriarNovoItem} />
-          <span>Clique para criar um novo item</span>
-        </div>
-      )}
-
-      <div className='container_valorTotal'>
-
-        <span>Valor total R$: </span>
-        <p> {calcularTotal()}</p>
-
-      </div>
+      }
     </div>
   );
 }

@@ -1,0 +1,52 @@
+svg {
+    width: 2.7em;
+}
+
+.titulo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+}
+
+.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+input[type="text"] {
+    width: 12rem;
+    text-align: center;
+}
+
+input[type="password"] {
+    margin-top: 1rem;
+    width: 12rem;
+    text-align: center;
+}
+
+.buttonLogin {
+    margin-top: 2rem;
+    background-color: rgb(25, 110, 36);
+    color: white;
+}
+
+.containerTextoLogin {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8em;
+    color: rgb(131, 131, 131);
+}
+
+.containerTextoLogin a {
+    color: rgb(131, 131, 131);
+    cursor: pointer;
+    border-bottom: 1px solid rgb(131, 131, 131);
+
+}
