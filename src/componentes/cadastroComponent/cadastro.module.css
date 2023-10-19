@@ -6,6 +6,12 @@
 
 }
 
+.icon {
+    width: 2.7em;
+    height: 2em;
+
+}
+
 .login {
     width: 100%;
     display: flex;
@@ -14,10 +20,11 @@
     margin-top: 5rem;
 }
 
-input[type="text"] {
+.inputText {
     width: 12rem;
     text-align: center;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 input[type="password"] {

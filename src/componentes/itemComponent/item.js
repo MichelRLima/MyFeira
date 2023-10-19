@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { BsFillPencilFill } from 'react-icons/bs'
 import { MdSave } from 'react-icons/md'
 import { Input } from 'antd';
-
+import { BsFillTrash3Fill } from 'react-icons/bs'
+import { toast } from 'react-toastify';
 
 function Item(props) {
 
@@ -42,12 +43,23 @@ function Item(props) {
 
     ////////////////////////////////////////////
     const handleSalvarClick = () => {
-        // Você pode adicionar aqui a lógica para salvar os valores editados
-        // Por exemplo, você pode atualizar o estado global ou fazer uma chamada à API
-        // E então, definir editando de volta para false para sair do modo de edição
-        console.log(valorSomado)
-        setEditando(false);
+        // Remove espaços em branco à esquerda e à direita e verifica se o valor não está vazio
+        const trimmedValue = valorEditado.trim();
+
+        if (trimmedValue === "" || isNaN(trimmedValue)) {
+            toast.error("Insira algum valor válido no item");
+        } else {
+            console.log(valorSomado);
+            setEditando(false);
+        }
     };
+
+
+
+
+
+
+
 
 
 
@@ -71,12 +83,12 @@ function Item(props) {
                     </div>
                     {editando ? (
                         <>  <div className={styles.conteudo}>
-                            <span>Nome: </span><Input className={styles.inputNome} type="text" value={nomeEditado} onChange={(e) => setNomeEditado(e.target.value)} />
-                            <span>R$: </span><Input className={styles.inputValor} type="text" value={valorEditado} onChange={(e) => setValorEditado(e.target.value)} />
+                            <Input className={styles.inputNome} placeholder="Nome" type="text" value={nomeEditado} onChange={(e) => setNomeEditado(e.target.value)} />
+                            <Input className={styles.inputValor} placeholder="Valor R$" type="text" value={valorEditado} onChange={(e) => setValorEditado(e.target.value)} />
 
                         </div>
                             <div className={styles.containerEditar}>
-                                <MdSave onClick={handleSalvarClick}  >SALVAR </MdSave>
+                                <MdSave className={styles.icon} onClick={handleSalvarClick}  >SALVAR </MdSave>
                             </div>
                         </>
                     ) : (
@@ -85,10 +97,8 @@ function Item(props) {
                             <p className={styles.valor}>R${parseFloat(valorSomado).toFixed(2)}</p>
 
                             <div className={styles.containerEditar}>
-
-
-
-                                <BsFillPencilFill onClick={handleEditarClick}  ></BsFillPencilFill>
+                                <BsFillPencilFill className={styles.icon} onClick={handleEditarClick}  ></BsFillPencilFill>
+                                <BsFillTrash3Fill className={styles.delete} onClick={() => props.showAlert(props.id, props.nome)} />
                             </div>
 
                         </>

@@ -5,31 +5,41 @@
 
 }
 
-.Item {
+.ContainerItem {
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 2em;
 
 
 }
 
+
+.Toastify__icon {
+  width: 40px;
+  /* Defina o tamanho desejado para o ícone em pixels */
+  height: 40px;
+}
+
+/* Ajuste o tamanho do ícone no estado ativo (hover) se necessário */
+.Toastify__toast-icon {
+  width: 45px;
+  height: 45px;
+}
+
 .container_delete {
-  width: 100%;
+  width: 3%;
   display: flex;
   justify-content: center;
   margin-bottom: 1em;
 }
 
-.Item .delete {
-  width: 1.2em;
-  color: rgb(180, 6, 6);
-}
+
 
 .Container_CriarItem {
   margin-top: 1em;
   width: 100%;
   display: flex;
-
   flex-direction: column;
   justify-items: center;
   margin-bottom: 8em;
@@ -37,8 +47,10 @@
 
 .CriarItem {
   color: rgb(7, 151, 55);
-  width: 2.5em;
-  margin: 0 auto;
+  width: 4em;
+  height: 2em;
+  margin: 1em auto;
+  cursor: pointer;
 }
 
 .texto_criarItem {
@@ -77,6 +89,8 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .container_buttons svg {
   width: 3em;
+  height: 2em;
+  cursor: pointer;
 }
 
 .container_buttons-confirm {

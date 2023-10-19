@@ -10,12 +10,12 @@ function Login(props) {
         <>
 
             <div className={styles.titulo}>
-                <BsCart3></BsCart3>
+                <BsCart3 className={styles.icon}></BsCart3>
                 <h1>MyFeira</h1>
             </div>
 
             <div className={styles.login}>
-                <Input
+                <Input className={styles.inputText}
                     type="text"
                     placeholder="username"
                 />

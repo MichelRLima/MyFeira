@@ -13,7 +13,7 @@ var itemSchema = new Schema(
 var clientSchema = new Schema(
     {
         nome: String,
-        username: String,
+        username: { type: String, unique: true },
         password: String,
         itens: [itemSchema], // Use o esquema de item como um array dentro do esquema do cliente
     },

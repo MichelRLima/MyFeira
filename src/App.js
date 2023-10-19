@@ -4,7 +4,6 @@ import Client from './componentes/clientComponet/client';
 import Item from "./componentes/itemComponent/item"
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai'
-import { BsFillTrash3Fill } from 'react-icons/bs'
 import Swal from 'sweetalert2';
 import ItemInput from './componentes/ItemInput/ItemInput';
 import Login from './componentes/loginComponent/login'
@@ -15,37 +14,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-
-  const newClientData = {
-    nome: "Michelteste",
-    username: "mrmdl",
-    password: "root",
-    itens: [
-      {
-        nome: "Item 1",
-        valor: 10.5,
-        quantidade: 3
-      },
-      {
-        nome: "Item 2",
-        valor: 5.0,
-        quantidade: 2
-      }
-    ]
-  };
-
-
-
-
-
-  axios.post('http://localhost:3001/clients', newClientData)
-    .then(response => {
-      console.log('Novo cliente inserido com sucesso:', response.data);
-    })
-    .catch(error => {
-      console.error('Erro ao inserir novo cliente:', error);
-    });
-
 
 
 
@@ -72,7 +40,7 @@ function App() {
   const [cadastro, setCdastro] = useState(false)
 
   function logar() {
-    toast.success('Usuário logado');
+    toast.success('Usuário logado', { autoClose: 8000 });
     setLogin(false)
     setCdastro(false)
   }
@@ -166,7 +134,7 @@ function App() {
 
       {login ?
         (
-          <Login logar={logar} cadastrar={cadastrar}></Login>
+          <Login logar={logar} cadastrar={cadastrar} ></Login>
         )
         : cadastro ?
           (
@@ -176,7 +144,8 @@ function App() {
           (
             <>
               <Client nome="Michel" />
-              <div className='Item'>
+
+              <div className='ContainerItem'>
                 {itens.map((item) => (
                   <div key={item.id}>
                     <Item
@@ -185,11 +154,9 @@ function App() {
                       valor={item.valor}
                       qtd={item.qtd}
                       atualizarItem={atualizarItem}
+                      showAlert={showAlert}
                     />
 
-                    <div className='container_delete'>
-                      <BsFillTrash3Fill className='delete' onClick={() => showAlert(item.id, item.nome)} />
-                    </div>
                     <hr></hr>
                   </div>
                 ))}

@@ -1,5 +1,7 @@
-svg {
+.icon {
     width: 2.7em;
+    height: 2em;
+
 }
 
 .titulo {
@@ -18,7 +20,7 @@ svg {
     margin-top: 5rem;
 }
 
-input[type="text"] {
+.inputText {
     width: 12rem;
     text-align: center;
 }

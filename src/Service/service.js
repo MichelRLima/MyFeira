@@ -39,8 +39,14 @@ app.post('/clients', async (req, res) => {
         await newClient.save(); // Salve o novo cliente no banco de dados
         res.status(201).json(newClient); // Responda com o novo cliente criado
     } catch (err) {
-        console.error('Erro ao criar novo cliente:', err);
-        res.status(500).json({ error: 'Erro ao criar novo cliente' });
+        if (err.code === 11000) {
+            // Este é um erro de chave duplicada
+            console.error('Erro ao criar novo cliente: Nome de usuário duplicado');
+            res.status(400).json({ error: 'Nome de usuário duplicado' });
+        } else {
+            console.error('Erro ao criar novo cliente:', err);
+            res.status(500).json({ error: 'Erro ao criar novo cliente' });
+        }
     }
 });
 
