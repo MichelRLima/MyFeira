@@ -3,6 +3,7 @@ import styles from './cadastro.module.css'
 import { BsCart3 } from "react-icons/bs"
 import { Input, Button } from 'antd';
 import axios from "axios";
+import { toast } from 'react-toastify';
 function Cadastro(props) {
 
     const [nome, setNome] = useState('');
@@ -29,13 +30,21 @@ function Cadastro(props) {
 
         if (nome && username && senha && confirmSenha) {
 
-            axios.post('http://localhost:3001/clients', newClientData)
-                .then(response => {
-                    console.log('Novo cliente inserido com sucesso:', response.data);
-                })
-                .catch(error => {
-                    console.error('Erro ao inserir novo cliente:', error);
-                });
+            if (senha !== confirmSenha) {
+                toast.error("Senhas não conferem");
+            } else {
+
+
+
+                axios.post('http://localhost:3001/clients', newClientData)
+                    .then(response => {
+                        console.log('Novo cliente inserido com sucesso:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao inserir novo cliente:', error);
+                    });
+            }
+
         } else {
             // Caso contrário, exiba uma mensagem de erro ou faça algo apropriado
             alert('Por favor, preencha todos os campos obrigatórios.');
@@ -61,7 +70,7 @@ function Cadastro(props) {
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                 />
-                <Input
+                <Input className={styles.inputText}
                     type="text"
                     placeholder="username (ex: michel123)"
                     required

@@ -44,9 +44,10 @@ function Item(props) {
     ////////////////////////////////////////////
     const handleSalvarClick = () => {
         // Remove espaços em branco à esquerda e à direita e verifica se o valor não está vazio
-        const trimmedValue = valorEditado.trim();
 
-        if (trimmedValue === "" || isNaN(trimmedValue)) {
+
+
+        if (valorEditado === "" || isNaN(valorEditado)) {
             toast.error("Insira algum valor válido no item");
         } else {
             console.log(valorSomado);
