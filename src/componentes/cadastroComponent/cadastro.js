@@ -11,10 +11,10 @@ function Cadastro(props) {
     const [senha, setSenha] = useState('');
     const [confirmSenha, setConfirmSenha] = useState('');
 
-    console.log(nome)
-    console.log(username)
-    console.log(senha)
-    console.log(confirmSenha)
+
+    function alertClientDuplicado() {
+        toast.error('Nome de usuário já existente', { autoClose: 8000 });
+    }
 
 
     const newClientData = {
@@ -39,12 +39,19 @@ function Cadastro(props) {
                 axios.post('http://localhost:3001/clients', newClientData)
                     .then(response => {
                         console.log('Novo cliente inserido com sucesso:', response.data);
+                        props.loginSucess()
                     })
                     .catch(error => {
+                        console.log("ERRO: " + error.response.data.errorCode)
+
+                        if (error.response && error.response.data && error.response.data.errorCode === 11000) {
+                            alertClientDuplicado()
+                        }
                         console.error('Erro ao inserir novo cliente:', error);
+
                     });
 
-                props.loginSucess()
+
             }
 
         } else {
@@ -94,7 +101,8 @@ function Cadastro(props) {
                     onChange={(e) => setConfirmSenha(e.target.value)}
                 />
 
-                <Button onClick={() => Cadastrar()} className={styles.buttonLogin} type="primary">Cadastrar</Button>
+                <Button onClick={() => Cadastrar()} className={styles.buttonCadastrar} type="primary">Cadastrar</Button>
+                <Button onClick={() => props.loginRetorn()} className={styles.buttonLogin} type="primary">Faça login</Button>
             </div>
         </>
     )

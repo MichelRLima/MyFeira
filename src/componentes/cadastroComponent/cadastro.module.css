@@ -24,17 +24,21 @@
     width: 12rem;
     text-align: center;
     margin-top: 1rem;
-    margin-bottom: 1rem;
 }
 
 input[type="password"] {
-    margin-top: 1rem;
     width: 12rem;
     text-align: center;
 }
 
-.buttonLogin {
+.buttonCadastrar {
     margin-top: 2rem;
     background-color: rgb(25, 110, 36);
+    color: white;
+}
+
+.buttonLogin {
+    margin-top: 1rem;
+    background-color: rgb(105, 105, 105);
     color: white;
 }

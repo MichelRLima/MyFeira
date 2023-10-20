@@ -42,13 +42,49 @@ app.post('/clients', async (req, res) => {
         if (err.code === 11000) {
             // Este é um erro de chave duplicada
             console.error('Erro ao criar novo cliente: Nome de usuário duplicado');
-            res.status(400).json({ error: 'Nome de usuário duplicado' });
+            res.status(400).json({ error: 'Nome de usuário duplicado', errorCode: 11000 });
+
         } else {
             console.error('Erro ao criar novo cliente:', err);
             res.status(500).json({ error: 'Erro ao criar novo cliente' });
         }
     }
 });
+
+// Rota de login
+app.post('/login', async (req, res) => {
+    // const { username, password } = req.body; // Dados de login do corpo da solicitação
+
+
+    const username = req.body.username
+    const password = req.body.password
+
+
+    try {
+
+        const user = await Clients.findOne({ username: req.body.username });
+
+        if (user) {
+
+            if (user.username === username && user.password === password) {
+                // Credenciais corretas, o usuário está autenticado.
+                res.status(200).json({ message: 'Login bem-sucedido' });
+            } else {
+                console.log("entrou")
+                // Credenciais incorretas, exibir mensagem de erro ou redirecionar para página de erro.
+                res.status(401).json({ message: 'Credenciains incorretas' });
+                console.log('Credenciains incorretas')
+            }
+        } else {
+            res.status(401).json({ message: 'Credenciais incorretas' });
+            console.log('Credenciains incorretas segundo ponto')
+        }
+    } catch (err) {
+        // Lidar com erros de consulta ou outros erros internos do servidor
+        res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+});
+
 
 
 app.listen(port, () => {

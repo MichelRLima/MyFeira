@@ -7,7 +7,7 @@ import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai'
 import Swal from 'sweetalert2';
 import ItemInput from './componentes/ItemInput/ItemInput';
 import Login from './componentes/loginComponent/login'
-import axios from 'axios';
+
 import Cadastro from './componentes/cadastroComponent/cadastro';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
@@ -15,21 +15,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
-
-
-  axios.get('http://localhost:3001/clients')
-    .then(response => {
-      console.log('Resposta da API:', response.data);
-      response.data.forEach(item => {
-        const client = item.client;
-        console.log('Cliente:', client);
-      });
-
-
-    })
-    .catch(error => {
-      console.error('Erro ao buscar dados da API:', error);
-    });
 
 
 
@@ -59,6 +44,13 @@ function App() {
 
   }
 
+  function loginRetorn() {
+
+    toast.success('Faça seu login', { autoClose: 8000 });
+    setLogin(true)
+    setCdastro(false)
+
+  }
   const showAlert = (item, nome) => {
     Swal.fire({
       title: 'Voce deseja retirar esse item?',
@@ -146,7 +138,7 @@ function App() {
         )
         : cadastro ?
           (
-            <Cadastro logar={logar} loginSucess={loginSucess} ></Cadastro>
+            <Cadastro logar={logar} loginSucess={loginSucess} loginRetorn={loginRetorn}></Cadastro>
           )
           :
           (
