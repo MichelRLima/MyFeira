@@ -17,7 +17,7 @@ function Login(props) {
             <div className={styles.login}>
                 <Input className={styles.inputText}
                     type="text"
-                    placeholder="username"
+                    placeholder="Username"
                 />
 
                 <Input

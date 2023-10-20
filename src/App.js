@@ -51,6 +51,14 @@ function App() {
     setCdastro(true)
   }
 
+  function loginSucess() {
+
+    toast.success('Usuário cadastrado. Faça seu login', { autoClose: 8000 });
+    setLogin(true)
+    setCdastro(false)
+
+  }
+
   const showAlert = (item, nome) => {
     Swal.fire({
       title: 'Voce deseja retirar esse item?',
@@ -138,7 +146,7 @@ function App() {
         )
         : cadastro ?
           (
-            <Cadastro logar={logar} ></Cadastro>
+            <Cadastro logar={logar} loginSucess={loginSucess} ></Cadastro>
           )
           :
           (

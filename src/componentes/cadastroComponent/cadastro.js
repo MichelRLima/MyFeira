@@ -43,6 +43,8 @@ function Cadastro(props) {
                     .catch(error => {
                         console.error('Erro ao inserir novo cliente:', error);
                     });
+
+                props.loginSucess()
             }
 
         } else {
@@ -72,7 +74,7 @@ function Cadastro(props) {
                 />
                 <Input className={styles.inputText}
                     type="text"
-                    placeholder="username (ex: michel123)"
+                    placeholder="Username (ex: michel123)"
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
