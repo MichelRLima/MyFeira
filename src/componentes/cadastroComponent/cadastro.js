@@ -42,12 +42,15 @@ function Cadastro(props) {
                         props.loginSucess()
                     })
                     .catch(error => {
-                        console.log("ERRO: " + error.response.data.errorCode)
+
+                        // console.log("ERRO: " + error.response.data.errorCode)
 
                         if (error.response && error.response.data && error.response.data.errorCode === 11000) {
                             alertClientDuplicado()
                         }
-                        console.error('Erro ao inserir novo cliente:', error);
+                        else {
+                            toast.error("Erro servidor interno")
+                        }
 
                     });
 
