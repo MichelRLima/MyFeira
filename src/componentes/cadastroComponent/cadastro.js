@@ -12,8 +12,6 @@ function Cadastro(props) {
     const [senha, setSenha] = useState('');
     const [confirmSenha, setConfirmSenha] = useState('');
 
-
-
     const newClientData = {
         nome: nome,
         username: username,

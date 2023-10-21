@@ -9,8 +9,6 @@ function Login(props) {
     const [urname, setUrname] = useState("")
     const [senha, setSenha] = useState("")
 
-
-
     const axiosInstance = axios.create({
         validateStatus: function (status) {
             return true; // Sempre retorna true para considerar todas as respostas como bem-sucedidas
