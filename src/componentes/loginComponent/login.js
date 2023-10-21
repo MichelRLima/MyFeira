@@ -17,7 +17,7 @@ function Login(props) {
 
     async function reqLogin() {
         try {
-            const response = await axiosInstance.post('http://ec2-52-14-95-83.us-east-2.compute.amazonaws.com:3003/login', {
+            const response = await axiosInstance.post('https://apimyfeira.online/login', {
                 username: urname,
                 password: senha
             });
