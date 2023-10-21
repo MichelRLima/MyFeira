@@ -27,6 +27,7 @@ function Login(props) {
 
 
             if (response.status === 200) {
+
                 const user = response.data.user
 
                 //const nome = user.nome;
