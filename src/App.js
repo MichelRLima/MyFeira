@@ -7,7 +7,7 @@ import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai'
 import Swal from 'sweetalert2';
 import ItemInput from './componentes/ItemInput/ItemInput';
 import Login from './componentes/loginComponent/login'
-
+import { BiLogOut } from 'react-icons/bi'
 import Cadastro from './componentes/cadastroComponent/cadastro';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
@@ -23,11 +23,13 @@ function App() {
   const [CriarItem, setCriarItem] = useState(false);
   const [login, setLogin] = useState(true)
   const [cadastro, setCdastro] = useState(false)
+  const [cliente, setCliente] = useState("")
 
-  function logar() {
+  function logar(cliente) {
     toast.success('Usuário logado', { autoClose: 8000 });
     setLogin(false)
     setCdastro(false)
+    setCliente(cliente)
   }
 
   function cadastrar() {
@@ -36,13 +38,14 @@ function App() {
     setCdastro(true)
   }
 
-  function loginSucess() {
+  function logOut() {
 
-    toast.success('Usuário cadastrado. Faça seu login', { autoClose: 8000 });
+    toast.success('Faça seu login', { autoClose: 8000 });
     setLogin(true)
     setCdastro(false)
 
   }
+
 
   function loginRetorn() {
 
@@ -138,12 +141,13 @@ function App() {
         )
         : cadastro ?
           (
-            <Cadastro logar={logar} loginSucess={loginSucess} loginRetorn={loginRetorn}></Cadastro>
+            <Cadastro logar={logar} loginRetorn={loginRetorn}></Cadastro>
           )
           :
           (
             <>
-              <Client nome="Michel" />
+              <BiLogOut className='exit' onClick={() => logOut()}></BiLogOut>
+              <Client nome={cliente} />
 
               <div className='ContainerItem'>
                 {itens.map((item) => (

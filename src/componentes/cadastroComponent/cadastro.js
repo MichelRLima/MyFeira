@@ -3,7 +3,8 @@ import styles from './cadastro.module.css'
 import { BsCart3 } from "react-icons/bs"
 import { Input, Button } from 'antd';
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { alertErro } from "../Alerts/alertErro";
+import { alertSucesso } from "../Alerts/alertSucesso";
 function Cadastro(props) {
 
     const [nome, setNome] = useState('');
@@ -11,10 +12,6 @@ function Cadastro(props) {
     const [senha, setSenha] = useState('');
     const [confirmSenha, setConfirmSenha] = useState('');
 
-
-    function alertClientDuplicado() {
-        toast.error('Nome de usuário já existente', { autoClose: 8000 });
-    }
 
 
     const newClientData = {
@@ -31,25 +28,29 @@ function Cadastro(props) {
         if (nome && username && senha && confirmSenha) {
 
             if (senha !== confirmSenha) {
-                toast.error("Senhas não conferem");
+
+                alertErro("Senhas não conferem")
             } else {
 
 
 
-                axios.post('http://localhost:3001/clients', newClientData)
+                axios.post('http://localhost:3003/clients', newClientData)
                     .then(response => {
                         console.log('Novo cliente inserido com sucesso:', response.data);
-                        props.loginSucess()
+                        alertSucesso("Usuário cadastrado com sucesso!")
+                        props.loginRetorn()
+
                     })
                     .catch(error => {
 
                         // console.log("ERRO: " + error.response.data.errorCode)
 
                         if (error.response && error.response.data && error.response.data.errorCode === 11000) {
-                            alertClientDuplicado()
+                            alertErro("Nome de usuário já existente");
                         }
                         else {
-                            toast.error("Erro servidor interno")
+
+                            alertErro("Internal server error");
                         }
 
                     });
@@ -58,8 +59,8 @@ function Cadastro(props) {
             }
 
         } else {
-            // Caso contrário, exiba uma mensagem de erro ou faça algo apropriado
-            alert('Por favor, preencha todos os campos obrigatórios.');
+            alertErro("Por favor, preencha todos os campos")
+
         }
 
 

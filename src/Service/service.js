@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 3003;
 const connectToDatabase = require('../database/db'); // Importe a função de conexão com o banco de dados
 const Clients = require('../model/client')
 app.use(express.json());
@@ -8,7 +8,7 @@ app.use(express.json());
 connectToDatabase();
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Permite o acesso do servidor React
+    res.header('Access-Control-Allow-Origin', '*'); // Permite o acesso do servidor React
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
@@ -66,9 +66,10 @@ app.post('/login', async (req, res) => {
 
         if (user) {
 
+
             if (user.username === username && user.password === password) {
                 // Credenciais corretas, o usuário está autenticado.
-                res.status(200).json({ message: 'Login bem-sucedido' });
+                res.status(200).json({ message: 'Login bem-sucedido', user });
             } else {
                 console.log("entrou")
                 // Credenciais incorretas, exibir mensagem de erro ou redirecionar para página de erro.

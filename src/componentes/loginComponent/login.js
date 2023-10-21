@@ -3,7 +3,7 @@ import styles from './login.module.css'
 import { BsCart3 } from 'react-icons/bs'
 import axios from 'axios';
 import { Input, Button } from 'antd';
-import { toast } from 'react-toastify';
+import { alertErro } from "../Alerts/alertErro";
 function Login(props) {
 
     const [urname, setUrname] = useState("")
@@ -19,25 +19,31 @@ function Login(props) {
 
     async function reqLogin() {
         try {
-            const response = await axiosInstance.post('http://localhost:3001/login', {
+            const response = await axiosInstance.post('http://localhost:3003/login', {
                 username: urname,
                 password: senha
             });
 
-            console.log(response);
+
 
             if (response.status === 200) {
+                const user = response.data.user
+
+                //const nome = user.nome;
                 // Credenciais corretas, o usuário está autenticado.
-                console.log('Usuário autenticado com sucesso');
-                props.logar();
+
+                console.log('Usuário autenticado com sucesso', user);
+
+                props.logar(user.nome);
             } else if (response.status === 401) {
                 // Credenciais incorretas, exibir mensagem de erro ou redirecionar para página de erro.
-                toast.error("Credenciais invalidas")
+                alertErro("Credenciais invalidas")
+
             } else {
-                toast.error("Erro servidor interno")
+                alertErro("Internal server error");
             }
         } catch (error) {
-            toast.error("Erro servidor interno")
+            alertErro("Internal server error");
         }
     }
 

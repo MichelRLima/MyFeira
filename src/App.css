@@ -104,7 +104,7 @@ input[type="number"]::-webkit-inner-spin-button,
 .container_valorTotal {
   width: 100%;
   height: 4em;
-  background-color: rgb(114, 0, 0);
+  background-color: rgb(36, 85, 32);
   position: fixed;
   bottom: 0;
   display: flex;
@@ -128,4 +128,12 @@ input[type="number"]::-webkit-inner-spin-button,
   color: white;
   font-weight: 400;
   font-size: 1.4em;
+}
+
+.exit {
+  margin-top: 1em;
+  margin-left: 0.7em;
+  color: rgb(148, 148, 148);
+  width: 1.5em;
+  height: auto;
 }
