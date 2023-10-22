@@ -57,30 +57,41 @@ function Item(props) {
 
 
 
-
-
-
-
-
-
-
     return (
         <>
             <div className={styles.containerItem}>
                 <div className={styles.item}>
                     <div className={styles.containerContador}>
-                        <button
-                            className={styles.buttonMenos}
-                            disabled={quantidade <= 1 ? true : false}
-                            onClick={() => setQuantidade(quantidade - 1)}>
-                            -
-                        </button>
+                        {editando ? (
+                            <button
+                                className={styles.buttonMenos}
+                                disabled={quantidade <= 1 ? true : false}
+                                onClick={() => setQuantidade(quantidade - 1)}>
+                                -
+                            </button>
+
+
+                        ) : (
+                            <>
+                            </>
+                        )
+
+
+                        }
 
                         <span className={styles.quantidade}>{quantidade}</span>
+                        {editando ? (
+                            <button className={styles.buttonMais} onClick={() => setQuantidade(quantidade + 1)}>
+                                +
+                            </button>
+                        ) : (
+                            <>
+                                <spna>x</spna>
+                            </>
+                        )
 
-                        <button className={styles.buttonMais} onClick={() => setQuantidade(quantidade + 1)}>
-                            +
-                        </button>
+
+                        }
                     </div>
                     {editando ? (
                         <>  <div className={styles.conteudo}>
