@@ -173,7 +173,7 @@ function App() {
       });
     }
 
-    return total;
+    return total.toFixed(2);
 
   };
 
