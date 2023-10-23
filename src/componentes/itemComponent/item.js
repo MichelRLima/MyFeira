@@ -29,9 +29,7 @@ function Item(props) {
     }, [quantidade, valorEditado])
 
 
-    const atualizarItem = () => {
-        props.atualizarItem(props.id, nomeEditado, valorEditado, valorSomado);
-    };
+
 
     useEffect(() => {
 
