@@ -7,6 +7,7 @@ var itemSchema = new Schema(
         nome: String,
         valor: Number, // Use Number para representar valores decimais (double)
         quantidade: Number, // Use Number para representar números inteiros
+        valorTotal: Number
     }
 );
 

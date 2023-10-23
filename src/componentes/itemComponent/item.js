@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 function Item(props) {
 
-    const [quantidade, setQuantidade] = useState(1);
+    const [quantidade, setQuantidade] = useState(props.qtd);
     const [nomeEditado, setNomeEditado] = useState(props.nome);
     const [valorEditado, setValorEditado] = useState(props.valor);
     const [editando, setEditando] = useState(false);
@@ -34,7 +34,7 @@ function Item(props) {
     };
 
     useEffect(() => {
-        atualizarItem();
+
         // Evite que o useEffect seja executado novamente ao incluir props.atualizarItem diretamente
         // como dependência. Isso é seguro, pois props.atualizarItem não muda ao longo do ciclo de vida do componente.
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,12 +45,10 @@ function Item(props) {
     const handleSalvarClick = () => {
         // Remove espaços em branco à esquerda e à direita e verifica se o valor não está vazio
 
-
-
         if (valorEditado === "" || isNaN(valorEditado)) {
             toast.error("Insira algum valor válido no item");
         } else {
-            console.log(valorSomado);
+            props.atualizarItem(props.id, nomeEditado, valorEditado, quantidade)
             setEditando(false);
         }
     };
@@ -86,7 +84,7 @@ function Item(props) {
                             </button>
                         ) : (
                             <>
-                                <spna>x</spna>
+                                <span>x</span>
                             </>
                         )
 
@@ -100,7 +98,7 @@ function Item(props) {
 
                         </div>
                             <div className={styles.containerEditar}>
-                                <MdSave className={styles.icon} onClick={handleSalvarClick}  >SALVAR </MdSave>
+                                <MdSave className={styles.icon} onClick={handleSalvarClick} >SALVAR </MdSave>
                             </div>
                         </>
                     ) : (
@@ -110,7 +108,7 @@ function Item(props) {
 
                             <div className={styles.containerEditar}>
                                 <BsFillPencilFill className={styles.icon} onClick={handleEditarClick}  ></BsFillPencilFill>
-                                <BsFillTrash3Fill className={styles.delete} onClick={() => props.showAlert(props.id, props.nome)} />
+                                <BsFillTrash3Fill className={styles.delete} onClick={() => props.showAlertDelete(props.id, props.nome)} />
                             </div>
 
                         </>

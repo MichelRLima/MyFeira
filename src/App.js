@@ -11,19 +11,27 @@ import { BiLogOut } from 'react-icons/bi'
 import Cadastro from './componentes/cadastroComponent/cadastro';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
+import Logo from './componentes/logo/logo';
+
+
 
 function App() {
 
 
 
-
+  const [dataClient, setDataClient] = useState("")
   const [itens, setItens] = useState([]);
   const [novoItem, setNovoItem] = useState({ nome: '', valor: "" });
   const [CriarItem, setCriarItem] = useState(false);
   const [login, setLogin] = useState(true)
   const [cadastro, setCdastro] = useState(false)
   const [cliente, setCliente] = useState("")
+
+
+
+
 
   function logar(cliente) {
     toast.success('Usuário logado', { autoClose: 8000 });
@@ -54,7 +62,8 @@ function App() {
     setCdastro(false)
 
   }
-  const showAlert = (item, nome) => {
+
+  const showAlertDelete = (item, nome) => {
     Swal.fire({
       title: 'Voce deseja retirar esse item?',
       text: nome,
@@ -73,35 +82,74 @@ function App() {
           confirmButtonColor: '#4caf50', // Defina a cor desejada para o botão OK
           confirmButtonText: 'OK' // Altere o texto do botão OK conforme necessário
         })
+
         removerItem(item)
       }
     })
   };
-  const generateUniqueId = () => {
-    return Math.random().toString(36).substr(2, 9);
-  };
+
 
   const adicionarItem = () => {
     if (novoItem.nome && novoItem.valor !== "") {
 
       const newItem = {
-        id: generateUniqueId(),
+
         nome: novoItem.nome,
         valor: novoItem.valor,
-        valorTotal: novoItem.valor,
+        quantidade: 1
 
       };
+
+      axios.put(`http://localhost:3003/adicionar/${dataClient._id}`, newItem)
+        .then((response) => {
+          console.log("Item criado com sucesso");
+
+          setDataClient(response.data)
+          calcularTotal()
+
+          // setDataClient(response.data)
+        })
+        .catch((error) => {
+          console.error("Erro ao criar Item:", error);
+        });
+
 
       setItens([...itens, newItem]);
       setNovoItem({ nome: '', valor: "" });
       setCriarItem(!CriarItem);
 
+
     }
   };
 
   const removerItem = (id) => {
-    const todosItens = itens.filter((item) => item.id !== id);
-    setItens(todosItens);
+
+
+    axios.delete(`http://localhost:3003/item/${dataClient._id}/${id}`)
+      .then((response) => {
+        console.log('Item excluído com sucesso');
+        setDataClient(response.data)
+        calcularTotal()
+      })
+      .catch((error) => {
+        console.error('Erro ao excluir o Item', error);
+      });
+
+  };
+
+  function atualizarItem(id, nome, valor, quantidade) {
+
+    axios.put(`http://localhost:3003/item/${dataClient._id}/${id}`, {
+      nome: nome,
+      valor: valor,
+      quantidade: quantidade,
+    }).then((response) => {
+      setDataClient(response.data)
+      calcularTotal()
+
+    }).catch((error) => {
+      console.log(error)
+    })
   };
 
   const CriarNovoItem = () => {
@@ -111,21 +159,21 @@ function App() {
   // Função para calcular o total dos valores dos itens
   const calcularTotal = () => {
     let total = 0;
-    itens.forEach((item) => {
-      total += item.valorTotal;
-    });
-    return total.toFixed(2);
+
+    if (dataClient && dataClient.itens && dataClient.itens.length > 0) {
+      dataClient.itens.forEach((item) => {
+        if (item.valor && item.quantidade) {
+
+          total += item.valor * item.quantidade;
+        }
+      });
+    }
+
+    return total;
+
   };
 
-  const atualizarItem = (id, novoNome, novoValor, novoQtd) => {
-    const novosItens = itens.map((item) => {
-      if (item.id === id) {
-        return { ...item, nome: novoNome, valor: novoValor, valorTotal: novoQtd };
-      }
-      return item;
-    });
-    setItens(novosItens);
-  };
+
 
 
 
@@ -137,7 +185,7 @@ function App() {
 
       {login ?
         (
-          <Login logar={logar} cadastrar={cadastrar} ></Login>
+          <Login logar={logar} cadastrar={cadastrar} setDataClient={setDataClient} ></Login>
         )
         : cadastro ?
           (
@@ -147,24 +195,26 @@ function App() {
           (
             <>
               <BiLogOut className='exit' onClick={() => logOut()}></BiLogOut>
+
+
+              <Logo></Logo>
               <Client nome={cliente} />
 
               <div className='ContainerItem'>
-                {itens.map((item) => (
-                  <div key={item.id}>
+                {dataClient.itens.map((item) => (
+                  <div key={item._id}>
+
                     <Item
-                      id={item.id}
+                      id={item._id}
                       nome={item.nome}
                       valor={item.valor}
-                      qtd={item.qtd}
+                      qtd={item.quantidade} // Use "quantidade" em vez de "qtd" para corresponder ao modelo
                       atualizarItem={atualizarItem}
-                      showAlert={showAlert}
+                      showAlertDelete={showAlertDelete}
                     />
-
-                    <hr></hr>
+                    <hr />
                   </div>
                 ))}
-
               </div>
 
               {CriarItem ? (

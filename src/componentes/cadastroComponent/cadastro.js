@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import styles from './cadastro.module.css'
-import { BsCart3 } from "react-icons/bs"
 import { Input, Button } from 'antd';
 import axios from "axios";
 import { alertErro } from "../Alerts/alertErro";
 import { alertSucesso } from "../Alerts/alertSucesso";
+import Logo from "../logo/logo";
 function Cadastro(props) {
 
     const [nome, setNome] = useState('');
@@ -32,7 +32,7 @@ function Cadastro(props) {
 
 
 
-                axios.post('https://apimyfeira.online/clients', newClientData)
+                axios.post('http://localhost:3003/clients', newClientData)
                     .then(response => {
                         console.log('Novo cliente inserido com sucesso:', response.data);
                         alertSucesso("Usuário cadastrado com sucesso!")
@@ -67,10 +67,7 @@ function Cadastro(props) {
 
     return (
         <>
-            <div className={styles.titulo}>
-                <BsCart3 className={styles.icon}></BsCart3>
-                <h1>MyFeira</h1>
-            </div>
+            <Logo></Logo>
 
             <div className={styles.login}>
 

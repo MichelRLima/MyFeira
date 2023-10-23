@@ -1,9 +1,11 @@
 import React, { useState } from "react"
+
 import styles from './login.module.css'
-import { BsCart3 } from 'react-icons/bs'
 import axios from 'axios';
 import { Input, Button } from 'antd';
 import { alertErro } from "../Alerts/alertErro";
+import Logo from "../logo/logo";
+
 function Login(props) {
 
     const [urname, setUrname] = useState("")
@@ -17,7 +19,7 @@ function Login(props) {
 
     async function reqLogin() {
         try {
-            const response = await axiosInstance.post('https://apimyfeira.online/login', {
+            const response = await axiosInstance.post('http://localhost:3003/login', {
                 username: urname,
                 password: senha
             });
@@ -28,10 +30,9 @@ function Login(props) {
 
                 const user = response.data.user
 
-                //const nome = user.nome;
-                // Credenciais corretas, o usuário está autenticado.
+                props.setDataClient(user)
 
-                console.log('Usuário autenticado com sucesso', user);
+                console.log('Usuário autenticado com sucesso');
 
                 props.logar(user.nome);
             } else if (response.status === 401) {
@@ -53,10 +54,7 @@ function Login(props) {
     return (
         <>
 
-            <div className={styles.titulo}>
-                <BsCart3 className={styles.icon}></BsCart3>
-                <h1>MyFeira</h1>
-            </div>
+            <Logo></Logo>
 
             <div className={styles.login}>
                 <Input className={styles.inputText}
