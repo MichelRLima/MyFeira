@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import Logo from './componentes/logo/logo';
+import { alertErro } from './componentes/Alerts/alertErro';
 
 
 
@@ -23,7 +24,7 @@ function App() {
 
   const [dataClient, setDataClient] = useState("")
   const [itens, setItens] = useState([]);
-  const [novoItem, setNovoItem] = useState({ nome: '', valor: "" });
+  const [novoItem, setNovoItem] = useState({ nome: '', valor: "", quantidade: "" });
   const [CriarItem, setCriarItem] = useState(false);
   const [login, setLogin] = useState(true)
   const [cadastro, setCdastro] = useState(false)
@@ -90,13 +91,13 @@ function App() {
 
 
   const adicionarItem = () => {
-    if (novoItem.nome && novoItem.valor !== "") {
+    if (novoItem.nome && novoItem.valor !== "" && !isNaN(novoItem.valor) && !isNaN(novoItem.quantidade) && novoItem.quantidade !== "") {
 
       const newItem = {
 
         nome: novoItem.nome,
         valor: novoItem.valor,
-        quantidade: 1
+        quantidade: novoItem.quantidade
 
       };
 
@@ -119,6 +120,9 @@ function App() {
       setCriarItem(!CriarItem);
 
 
+    }
+    else {
+      alertErro("Existe alguma informação incorreta")
     }
   };
 

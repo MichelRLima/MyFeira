@@ -11,11 +11,20 @@ function ItemInput({ novoItem, setNovoItem }) {
                 onChange={(e) => setNovoItem({ ...novoItem, nome: e.target.value })}
             />
             <Input
-                type="number"
+                type="text"
                 placeholder="Valor em R$"
                 value={novoItem.valor}
                 onChange={(e) =>
-                    setNovoItem({ ...novoItem, valor: parseFloat(e.target.value) })
+                    setNovoItem({ ...novoItem, valor: e.target.value })
+                }
+            />
+
+            <Input
+                type="number"
+                placeholder="Quantidade: 1"
+                value={novoItem.quantidade}
+                onChange={(e) =>
+                    setNovoItem({ ...novoItem, quantidade: e.target.value })
                 }
             />
         </div>
