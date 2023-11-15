@@ -30,15 +30,6 @@ function Item(props) {
 
 
 
-
-    useEffect(() => {
-
-        // Evite que o useEffect seja executado novamente ao incluir props.atualizarItem diretamente
-        // como dependência. Isso é seguro, pois props.atualizarItem não muda ao longo do ciclo de vida do componente.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.id, nomeEditado, valorEditado, valorSomado]);
-
-
     ////////////////////////////////////////////
     const handleSalvarClick = () => {
         // Remove espaços em branco à esquerda e à direita e verifica se o valor não está vazio
