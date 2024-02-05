@@ -42,6 +42,17 @@ function Item(props) {
         }
     };
 
+    const handleInputChange = (event) => {
+        let inputValue = event.target.value.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+        const numericValue = parseFloat(inputValue) / 100;
+
+        if (!isNaN(numericValue)) {
+            setValorEditado(numericValue.toFixed(2));
+        } else {
+            setValorEditado('0.00');
+        }
+    };
+
 
 
     return (
@@ -83,7 +94,7 @@ function Item(props) {
                     {editando ? (
                         <>  <div className={styles.conteudo}>
                             <Input className={styles.inputNome} placeholder="Nome" type="text" value={nomeEditado} onChange={(e) => setNomeEditado(e.target.value)} />
-                            <Input className={styles.inputValor} placeholder="Valor R$" type="text" value={valorEditado} onChange={(e) => setValorEditado(e.target.value)} />
+                            <Input className={styles.inputValor} placeholder="Valor R$" type="text" value={valorEditado} onChange={handleInputChange} />
 
                         </div>
                             <div className={styles.containerEditar}>
