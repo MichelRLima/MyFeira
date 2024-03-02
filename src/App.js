@@ -101,7 +101,7 @@ function App() {
 
       };
 
-      axios.put(`https://apimyfeira.online/adicionar/${dataClient._id}`, newItem)
+      axios.put(`https://api-myfeira.onrender.com/adicionar/${dataClient._id}`, newItem)
         .then((response) => {
           console.log("Item criado com sucesso");
 
@@ -129,7 +129,7 @@ function App() {
   const removerItem = (id) => {
 
 
-    axios.delete(`https://apimyfeira.online/item/${dataClient._id}/${id}`)
+    axios.delete(`https://api-myfeira.onrender.com/item/${dataClient._id}/${id}`)
       .then((response) => {
         console.log('Item excluído com sucesso');
         setDataClient(response.data)
@@ -143,7 +143,7 @@ function App() {
 
   function atualizarItem(id, nome, valor, quantidade) {
 
-    axios.put(`https://apimyfeira.online/item/${dataClient._id}/${id}`, {
+    axios.put(`https://api-myfeira.onrender.com/item/${dataClient._id}/${id}`, {
       nome: nome,
       valor: valor,
       quantidade: quantidade,

@@ -19,7 +19,7 @@ function Login(props) {
 
     async function reqLogin() {
         try {
-            const response = await axiosInstance.post('https://apimyfeira.online/login', {
+            const response = await axiosInstance.post('https://api-myfeira.onrender.com/login', {
                 username: urname,
                 password: senha
             });

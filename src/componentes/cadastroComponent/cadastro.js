@@ -32,7 +32,7 @@ function Cadastro(props) {
 
 
 
-                axios.post('https://apimyfeira.online/clients', newClientData)
+                axios.post('https://api-myfeira.onrender.com/clients', newClientData)
                     .then(response => {
                         console.log('Novo cliente inserido com sucesso:', response.data);
                         alertSucesso("Usuário cadastrado com sucesso!")
